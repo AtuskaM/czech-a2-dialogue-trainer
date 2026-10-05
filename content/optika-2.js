@@ -1,4 +1,4 @@
-// Content for PDF dialogue 4, page 5. Examples use the unchanged word matcher.
+// PDF dialogue 4, expanded into contextual intents, paraphrases and rejoining loops.
 (function() {
   const concepts={},nodes={};
   const r=(id,next,examples)=>{concepts[id]=examples;return {id,intent:id,examples,match:{required:[id]},next,kind:'choice',reward:1};};
@@ -91,5 +91,113 @@
   n('lens_done','Dobře, objednávku čoček jsem zapsala. Připravíme je do pátku. Na shledanou.','Good, I have placed the contact-lens order. We will have them ready by Friday. Goodbye.',[r('finish_lenses',null,bye)],'Děkuji. Na shledanou.','Thank you. Goodbye.');
   n('later','Dobře, můžete se vrátit později. Na shledanou.','All right, you can come back later. Goodbye.',[r('finish_later',null,bye)],'Na shledanou.','Goodbye.');
 
-  globalThis.DialogueCatalog.push({schemaVersion:1,id:'optika-2',title:'4. Optika – nové brýle (varianta 2)',clerkLabel:'Optička (Optician)',situation:'Jste v optice a potřebujete opravit brýle.',situationTranslation:'You are at an optician’s and you need to buy glasses.',source:{file:'zkouska_A2_uloha_2_dialogy_1-rayoyf.pdf',page:5,dialogue:4},start:'start',concepts,nodes});
+
+  // Expanded conversational intents; PDF supplies the baseline path, not all possible wording.
+  const tools=globalThis.ConversationTools(nodes,concepts);
+  Object.assign(concepts,{
+    repeatRequest:['říct ještě jednou','řekněte ještě jednou','mluvte pomaleji','nerozuměl','nerozuměla','opakujte otázku'],
+    understood:['rozumím','dobře','jasně','aha','chápu','děkuji za vysvětlení'],
+    notUnderstood:['nerozumím','nerozuměl','nerozuměla','nechápu','nevím'],
+    repairAction:['opravit','spravit','opravu','oprava','spravení','opravíte','spravíte','opravili','spravili','rozbil','rozbila','rozbité','rozbity'],
+    glassesObject:['brýle','brýlí','brýlím','brejle'],
+    repairObjection:['opravit','spravit','nejdou','nejde','opravíte','spravíte','přece jenom','přece jen'],
+    lensesObject:['čočky','čoček','kontaktní','kontaktními'],
+    glassesChoice:['nové brýle','brýle místo','raději brýle','radši brýle','podívám na brýle','vyberu brýle','koupím brýle'],
+    noPrescription:['nemám','nemáme','bez předpisu','zapomněl','zapomněla','nemám ho'],
+    yesPrescription:['ano','mám','tady','zde','přinesl','přinesla'],
+    query:['co znamená','co je','co jsou','jaký je rozdíl','nerozumím','vysvětlíte','vysvětlit'],
+    unknownPower:['nevím','neznám','nepamatuju','nepamatuji','nemám předpis'],
+    knownPower:['minus','plus','dioptrie jsou','dioptrií mám'],
+    consent:['ano','souhlasím','souhlas','dobře','v pořádku','můžete'],
+    refusal:['nechci','nevezmu','nekoupím','nesouhlasím','neobjednávejte','neobjednat'],
+    laterWords:['jindy','později','zítra','rozmyslím','nemám čas','nemůžu čekat','nevyhovuje'],
+    dailyChoice:['denní','denních','jednodenní','na jeden den'],
+    monthlyChoice:['měsíční','měsíčních','na měsíc'],
+    blackChoice:['černé','černý','černou','černých'],
+    brownChoice:['hnědé','hnědý','hnědou','hnědých'],
+    tooSmall:['těsné','malé','malý','tlačí','větší','větší velikost'],
+    tooLarge:['velké','velký','volné','volný','menší','menší velikost'],
+    badFit:['nesedí','nejsou dobře','nejsou dobré','nepohodlné','tlačí'],
+    goodFit:['sedí','pohodlné','dobré','lepší','líbí','vezmu','koupím','beru','ano'],
+    costQuery:['kolik','cena','cenu','ceny','stojí','stojí za','drahé','levnější'],
+    dateQuery:['kdy','jak dlouho','termín','termíny','vyzvednout','vyzvednu','vyzvedneme','hotové','připravené'],
+    orderWords:['objednejte','objednat','objednávku','vezmu','beru','koupím'],
+    buyRefusal:['nechci','nekoupím','nevezmu','neobjednávejte','nesouhlasím'],
+    budgetTwo:['dva tisíce','dvou tisíc'],
+    budgetFifteen:['tisíc pět set','patnáct set'],
+    budgetOther:['tisíc','tisíce','korun','stovek'],
+    goodbyeWords:['na shledanou','nashledanou','hezký den','hezky den','mějte se'],
+    tryingWords:['zkusit','vyzkoušet','nasadit','vyzkouším']
+  });
+  const set=(id,variants,patterns,forbidden=[],positive=[])=>tools.configure(id,variants,patterns,forbidden,positive);
+  set('repair_glasses',['Potřebuji spravit brýle.','Můžete mi spravit tyto brýle?'],[['repairAction','glassesObject']],['refusal']);
+  set('explain_repair',['Skutečně nejdou opravit?','Nemůžete je přece jenom opravit?','Opravdu to nejde spravit?','Nešlo by je ještě spravit?'],[['repairObjection']],['refusal']);
+  set('ask_contacts',[],[['lensesObject']],['refusal','glassesChoice']);
+  set('choose_glasses',['Tak bych chtěl nové.','Dobře, koupím si tedy nové.'],[['glassesChoice'],['glassesObject']],[],['choose_glasses','glassesChoice','glassesObject']);
+  set('has_prescription',[],[['yesPrescription']],['noPrescription','unknownPower','query']);
+  set('known_dioptres',['Mám dvě dioptrie.','Vlevo minus tři a vpravo minus dva.','Dioptrie znám.'],[['knownPower']],['unknownPower']);
+  set('unknown_dioptres',['Bohužel předpis nemám.','To netuším.','Kolik mám dioptrií, nevím.'],[['unknownPower'],['noPrescription']]);
+  set('explain_dioptres',[],[['query']],['knownPower']);
+  set('agree_measure',[],[['consent']],['refusal','laterWords','query']);
+  set('postpone_measure',[],[['laterWords'],['refusal']]);
+  set('explain_lenses',[],[['query']]);
+  set('repeat_lens_prices',[],[['costQuery']],['query']);
+  set('prefer_glasses',[],[['glassesChoice'],['glassesObject']],[],['prefer_glasses','glassesChoice','glassesObject']);
+  set('daily_lenses',[],[['dailyChoice']],['monthlyChoice','query'],['daily_lenses','dailyChoice','monthlyChoice']);
+  set('monthly_lenses',[],[['monthlyChoice']],['dailyChoice','query'],['monthly_lenses','monthlyChoice','dailyChoice']);
+  set('ask_lens_ready',[],[['dateQuery']],['laterWords']);
+  set('order_lenses',[],[['orderWords']],['buyRefusal','dateQuery']);
+  set('change_to_glasses',[],[['glassesChoice']]);
+  set('accept_lens_date',['Vyhovuje mi to.','Pátek je dobrý.'],[['consent'],['orderWords']],['laterWords','buyRefusal']);
+  set('decline_lens_date',['To je pozdě.','Dřív to nejde?'],[['laterWords']]);
+  set('budget_2000',[],[['budgetTwo']]);
+  set('budget_1500',[],[['budgetFifteen']]);
+  set('black_frames',[],[['blackChoice']],['brownChoice'],['black_frames','blackChoice','brownChoice']);
+  set('brown_frames',[],[['brownChoice']],['blackChoice'],['brown_frames','brownChoice','blackChoice']);
+  set('explain_trying',[],[['tryingWords']],['blackChoice','brownChoice']);
+  set('bad_fit',[],[['tooSmall'],['badFit']],['tooLarge']);
+  set('good_fit',[],[['goodFit'],['dateQuery']],['badFit','tooSmall','tooLarge','buyRefusal']);
+  set('larger_fit',[],[['goodFit']],['badFit','tooSmall','tooLarge','buyRefusal']);
+  set('still_bad_fit',[],[['badFit'],['tooSmall'],['laterWords'],['buyRefusal']]);
+  set('confirm_glasses',[],[['orderWords'],['consent']],['buyRefusal','laterWords','costQuery']);
+  set('decline_glasses',['Je to příliš drahé.','Ještě se rozmyslím.'],[['laterWords'],['buyRefusal']]);
+  for(const id of ['finish_glasses','finish_lenses','finish_later'])set(id,[],[['goodbyeWords']]);
+
+  const cancel=tools.response('cancel_purchase','later',['Nechci nic koupit.','Rozmyslím si to.','Přijdu jindy.'],{patterns:[['laterWords'],['buyRefusal']]});
+  nodes.repair.responses.push(cancel);
+  tools.clarify('repair','repair_explained','Bohužel ne, ani další oprava není možná. Můžeme ale vybrat nové brýle nebo čočky. Co byste raději?','Unfortunately, another repair is not possible either. We can choose new glasses or contact lenses. Which would you prefer?');
+  nodes.repair_explained.responses.push(tools.response('insist_repair','repair_options',['Nemůžete je přece jenom spravit?','A opravdu to opravit nejde?'],{patterns:[['repairObjection']],forbidden:['buyRefusal']},0));
+  tools.node('repair_options','Rozumím, že chcete opravu. Tyto brýle už ale spravit nedokážeme. Chcete se podívat na brýle, na čočky, nebo přijít jindy?','I understand that you want a repair, but we cannot fix these glasses. Would you like to look at glasses, contact lenses, or come another time?',nodes.repair.responses.filter(r=>r.id!=='explain_repair'),'repair');
+  tools.clarify('prescription','dioptres_explained','Předpis je papír od očního lékaře. Dioptrie říkají, jak silné čočky potřebujete. Máte ten papír, znáte čísla, nebo je máme změřit?','A prescription is a paper from the eye doctor. Dioptres say how strong your lenses need to be. Do you have that paper, know the numbers, or should we measure them?');
+
+  const measureQuestion=tools.response('measure_question','measure_explained',['Jak mi změříte zrak?','Co budete dělat?','Bolí to?','Jak dlouho to trvá?'],{patterns:[['query'],['dateQuery']]},0);
+  nodes.measure.responses.push(measureQuestion);
+  tools.clarify('measure','measure_explained','Podíváte se na písmena a řeknete, co vidíte. Potom vybereme vhodné čočky. Chcete to zkusit teď?','You will look at letters and say what you see. Then we will choose suitable lenses. Would you like to try now?');
+  const lensPriceQuestion=nodes.lens_prices.responses.find(r=>r.id==='repeat_lens_prices');
+  for(const id of ['daily','monthly'])nodes[id].responses.push(lensPriceQuestion);
+  const askBudget=tools.response('budget_other','budget_options',['Mám jen tisíc korun.','Můžu dát 1800 korun.','Nemám tolik peněz.','Máte něco levnějšího?'],{patterns:[['budgetOther'],['costQuery']],forbidden:['budgetTwo','budgetFifteen']});
+  nodes.budget.responses.push(askBudget);nodes.budget_repeat.responses.push(askBudget);
+  tools.node('budget_options','Rozumím. V tomto příkladu máme brýle od 1500 korun. Chcete si je prohlédnout, nebo přijít později?','I understand. In this practice situation, our glasses start at 1,500 crowns. Would you like to look at them or come later?',[
+    tools.response('accept_budget','cheaper_frames',['Dobře, ukažte mi je.','Ano, podívám se.','Můžu je vidět?'],{patterns:[['consent'],['tryingWords']],forbidden:['buyRefusal']}),
+    tools.response('decline_budget','later',['To si nemůžu dovolit.','Přijdu později.','Ne, děkuji.'],{patterns:[['laterWords'],['buyRefusal']]})
+  ],'budget');
+  const wantSmaller=tools.response('need_smaller_frames','smaller_size',['Jsou mi velké.','Máte menší?','Tyhle jsou moc volné.'],{patterns:[['tooLarge']],forbidden:['tooSmall']});
+  for(const id of ['try_black','try_brown','other_size'])nodes[id].responses.push(wantSmaller);
+  tools.node('smaller_size','Zkuste tyto menší brýle. Sedí vám lépe?','Try these smaller glasses. Do they fit better?',nodes.other_size.responses.filter(r=>r.id!=='need_smaller_frames'),'choose_frames');
+  const frameCost=tools.response('ask_frame_cost','frame_cost',['Kolik ty brýle stojí?','Jaká je cena?','Kolik za ně zaplatím?'],{patterns:[['costQuery']]},0);
+  for(const id of ['choose_frames','cheaper_frames','trying_explained','try_black','try_brown'])nodes[id].responses.push(frameCost);
+  tools.node('frame_cost','Tyto brýle stojí 1500 korun. Chcete si zkusit černé, nebo hnědé?','These glasses cost 1,500 crowns. Would you like to try the black or brown ones?',chooseFrames,'choose_frames');
+  const readyQuery=tools.response('glasses_date_question','glasses_date_explained',['Kdy budou hotové?','Kde si je vyzvednu?','Jak dlouho budu čekat?'],{patterns:[['dateQuery']]},0);
+  nodes.glasses_ready.responses.push(readyQuery);
+  tools.clarify('glasses_ready','glasses_date_explained','Brýle budou hotové v pátek. Vyzvednete si je tady v optice. Mám je objednat?','The glasses will be ready on Friday. Collect them here at the optician. Shall I order them?');
+  nodes.start.responses.push(tools.response('buy_new_direct','budget',['Chci nové brýle.','Chtěl bych si koupit nové brýle.'],{patterns:[['glassesChoice']],forbidden:['repairAction','buyRefusal']}));
+  const repairPrice=tools.response('repair_price_question','repair_price',['Kolik stojí nové brýle?','A jaká je cena čoček?'],{patterns:[['costQuery','glassesObject'],['costQuery','lensesObject']]},0);
+  nodes.repair.responses.push(repairPrice);
+  tools.node('repair_price','Tyto nové brýle jsou za 1500 korun. Denní čočky vyjdou asi na 800 korun za měsíc, měsíční na 200 korun. Chcete se podívat na brýle, nebo zjistit více o čočkách?','These new glasses cost 1,500 crowns. Daily lenses cost about 800 crowns per month, monthly ones 200 crowns. Would you like to look at glasses or learn more about lenses?',nodes.repair.responses.filter(r=>r.id!=='repair_price_question'&&r.id!=='explain_repair'),'repair');
+  globalThis.ExpandedIntents.optician(nodes,concepts,tools);
+  tools.rejoin('start_repeat','start');
+  for(const [id,source]of [['repair_explained','repair'],['repair_options','repair'],['dioptres_explained','prescription'],['measure_explained','measure'],['lenses_explained','lens_prices'],['lens_prices_repeat','lens_prices'],['trying_explained','choose_frames'],['glasses_date_explained','glasses_ready']])tools.rejoin(id,source);
+  tools.repeatSupport();
+
+  globalThis.DialogueCatalog.push({schemaVersion:1,matchingRevision:2,id:'optika-2',title:'4. Optika – nové brýle (varianta 2)',clerkLabel:'Optička (Optician)',situation:'Jste v optice a potřebujete opravit brýle.',situationTranslation:'You are at an optician’s and need to have your glasses repaired.',source:{file:'zkouska_A2_uloha_2_dialogy_1-rayoyf.pdf',page:5,dialogue:4},start:'start',concepts,nodes});
 })();

@@ -4,44 +4,14 @@
 // SYNONYM GROUPS
 // ============================================================
 const synonyms = [
-  ["chci","chce","chtěl","chtěla","bych","přeji","přeju","rád","ráda","potřebuju","potřebuji","potřeboval","potřebovala","zájem","můžu","můžete","šlo"],
-  ["zařídit","zařídil","zařídila","zakoupit","koupit","koupil","koupila","vyřídit","pořídit","vzít","prodáváte","máte"],
-  ["kartu","karta","karty","kartou"],
-  ["vlak","vlakem","vlaku"],
-  ["slevu","sleva","slevou","slevová","slevovou","zlevněnou"],
-  ["fotku","fotka","foto","fotografii","fotografie"],
-  ["děkuju","děkuji","díky","dekuju","děkujem"],
-  ["ano","jistě","samozřejmě","určitě","jasně","jo","ok","supr","super","aha"],
-  ["ne","bohužel","nemám","nemáme","ježišmária"],
-  ["dobrý","dobré","dobrou","ahoj"],
-  ["prosím","prosim","promiňte","promiň"],
-  ["rok","roky","roku","let","ročně","roční"],
-  ["jeden","jedna","jedno","1"],
-  ["měsíc","měsíce","měsíčně","měsíců"],
-  ["den","dny","denně","dní"],
-  ["korun","koruna","kč","kc","koruny"],
-  ["formulář","žádost","žádostí"],
-  ["pas","občanku","občanka","průkaz","průkazku","doklady","doklad"],
-  ["kartou","hotově","hotovost","platit"],
-  ["dva","dvě","2"],
-  ["tři","3"],
-  ["pět","5"],
-  ["dvacet pět","25"],
-  ["padesát","50"],
-  ["nerozumím","nerozumim","rozumím"],
-  ["zopakovat","zopakujte","opakovat"],
-  ["promiňte","promiň","omlouvám"],
-  ["kolik","stojí","cena","cenu","zaplatit"],
-  // NEW: glued phrases (speech recognition often merges these)
-  ["nashledanou","na shledanou","nashledanou"],
-  ["dobrýden","dobrý den"],
-  ["dobrývečer","dobrý večer"],
-  ["dobrérano","dobré ráno"],
-  ["děkujimockrát","děkuji mockrát","děkuju mockrát"],
-  ["promiňte","promiňte","promiň"],
-  ["není zač","není zač"],
-  ["namít","na mít"],
-  ["procent","procenta","procentech","%"],
+  ["chci","chtěl","chtěla","přeji","přeju"],
+  ["potřebuji","potřebuju","potřeboval","potřebovala"],
+  ["kartu","karta","karty"], ["vlak","vlakem","vlaku"],
+  ["slevová","slevovou","slevové"], ["fotku","fotka","fotografii","fotografie"],
+  ["děkuji","děkuju","díky"], ["ano","jo","jistě","samozřejmě"],
+  ["rok","roky","roku"], ["jeden","jedna","jedno"], ["dva","dvě"],
+  ["měsíc","měsíce","měsíců"], ["den","dny","dní"],
+  ["korun","koruna","kč","koruny"], ["prosím","prosim"]
 ];
 
 const synonymMap = {};
@@ -64,7 +34,7 @@ function numberToCzechWords(num) {
     1000:"jeden tisíc",2000:"dva tisíce",3000:"tři tisíce",4000:"čtyři tisíce",5000:"pět tisíc",
     6000:"šest tisíc",7000:"sedm tisíc",8000:"osm tisíc",9000:"devět tisíc"
   };
-  if (map[num]) return map[num];
+  if (Object.hasOwn(map,num)) return map[num];
   if (num < 100) {
     const tens = Math.floor(num/10)*10;
     const units = num%10;
@@ -98,50 +68,16 @@ function formatText(text, level) {
 function normalize(text) {
   // First convert numbers to Czech words, then lowercase & clean
   const withWords = convertNumbersToWords(text);
-  return withWords.toLowerCase().replace(/[.,!?;:]/g, '').replace(/\s+/g, ' ').trim();
-}
-
-function levenshtein(a, b) {
-  const m = a.length, n = b.length;
-  if (m === 0) return n;
-  if (n === 0) return m;
-  const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
-  for (let i = 0; i <= m; i++) dp[i][0] = i;
-  for (let j = 0; j <= n; j++) dp[0][j] = j;
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
-    }
-  }
-  return dp[m][n];
-}
-
-// Try splitting a glued word into two parts and matching each part
-function splitAndMatch(gluedWord, expWords) {
-  // Only try for words > 6 chars
-  if (gluedWord.length < 6) return null;
-  for (let i = 3; i < gluedWord.length - 2; i++) {
-    const part1 = gluedWord.slice(0, i);
-    const part2 = gluedWord.slice(i);
-    // Check if both parts match two different expected words
-    const match1 = expWords.find(w => wordsMatch(w, part1));
-    const match2 = expWords.find(w => wordsMatch(w, part2));
-    if (match1 && match2 && match1 !== match2) {
-      return [match1, match2];
-    }
-  }
-  return null;
+  return withWords.toLowerCase().replace(/nashledanou/g, 'na shledanou').replace(/dobrýden/g, 'dobrý den').replace(/[.,!?;:…%]/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
 function wordsMatch(a, b) {
-  if (a === b) return true;
-  if (canonicalize(a) === canonicalize(b)) return true;
-  const maxDist = Math.max(a.length, b.length) > 4 ? 1 : 0;
-  return levenshtein(a, b) <= maxDist;
+  const fold = word => word.normalize('NFD').replace(/\p{M}/gu,'');
+  return fold(canonicalize(a)) === fold(canonicalize(b));
 }
 
-// Preserve v3's synonyms, edit-distance tolerance, glued-word matching and
-// formula. Apply the explicitly requested non-essential courtesy exclusion.
+// Model wording comparison is descriptive, never an acceptance decision.
+// Courtesy words do not reduce similarity to an otherwise complete answer.
 const FILLERS = ['hm', 'no', 'tak', 'já', 'ty', 'prostě', 'jako', 'eee', 'ehm', 'hmm'];
 const COURTESY = new Set(['děkuju','děkuji','díky','dekuju','děkujem','děkujimockrát',
   'prosím','prosim','promiňte','promiň','omlouvám','mockrát']);
@@ -167,27 +103,6 @@ function scoreOne(expected, actual) {
         used[i] = true;
         found = true;
         break;
-      }
-    }
-    // Second: try to find this word inside a glued word
-    if (!found) {
-      for (let i = 0; i < actWords.length; i++) {
-        if (used[i]) continue;
-        // Try splitting the actual word and matching the expected word
-        const glued = actWords[i];
-        if (glued.length > 6) {
-          for (let j = 2; j < glued.length - 1; j++) {
-            const part1 = glued.slice(0, j);
-            const part2 = glued.slice(j);
-            if (wordsMatch(expWord, part1) || wordsMatch(expWord, part2)) {
-              // Mark as found, but don't consume the whole glued word
-              // (the other part will be matched by another expected word)
-                found = true;
-              break;
-            }
-          }
-        }
-        if (found) break;
       }
     }
     results.push({ word: expWord, correct: found });

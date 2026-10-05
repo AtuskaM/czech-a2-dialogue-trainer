@@ -1,3 +1,5 @@
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { font-family: Arial, sans-serif; background: #f0f4f8; margin: 0; padding: 20px; display: flex; justify-content: center; }
   .container { max-width: 760px; width: 100%; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
   h1 { color: #2c3e50; font-size: 22px; margin-top: 0; }
@@ -7,6 +9,7 @@ body { font-family: Arial, sans-serif; background: #f0f4f8; margin: 0; padding: 
 
   .settings { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
   .settings select { padding: 8px 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; cursor: pointer; flex: 1; min-width: 200px; }
+  #questionSelect { min-width: 0; max-width: 100%; flex-basis: 100%; }
   .level-toggle { display: flex; gap: 5px; background: #ecf0f1; padding: 4px; border-radius: 8px; }
   .level-toggle button { padding: 6px 12px; border: none; background: transparent; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: bold; color: #7f8c8d; }
   .level-toggle button.active { background: #3498db; color: white; }
@@ -85,3 +88,38 @@ body { font-family: Arial, sans-serif; background: #f0f4f8; margin: 0; padding: 
   .situation-translation.revealed {
     display: block;
   }
+
+/* Functional access and mobile fixes; visual redesign is the final roadmap phase. */
+.intro, .help, details p { line-height: 1.5; color: #34495e; }
+.help { font-size: 14px; }
+.clerk-photo { display: grid; place-items: center; font-size: 42px; }
+.clerk-bubble { min-width: 0; overflow-wrap: anywhere; }
+.clerk-label, .clerk-translation, .situation-translation, .expected, .status { color: #526373; }
+.clerk-written { color: #117666; }
+.score.good { color: #186b3e; }
+.score.bad { color: #a52b20; }
+.level-toggle button { color: #526373; min-height: 44px; }
+.level-toggle button.active, .play-btn { background: #176b9c; }
+.hint-btn { background: #75418b; }
+.record-btn { background: #b9382a; }
+button, select, summary { min-height: 44px; }
+button:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid #145c91; outline-offset: 3px; }
+summary { padding: 10px 0; cursor: pointer; font-weight: bold; }
+details { margin-top: 12px; }
+.result-box { overflow-wrap: anywhere; }
+@media (max-width: 520px) {
+  body { padding: 10px; }
+  .container { padding: 16px; }
+  h1 { font-size: 20px; }
+  .settings select { width: 100%; min-width: 0; flex-basis: 100%; }
+  .level-toggle { width: 100%; }
+  .level-toggle button { flex: 1; }
+  .scene { gap: 8px; }
+  .clerk-photo { width: 48px; height: 48px; font-size: 24px; }
+  .clerk-bubble { padding: 12px; }
+  .buttons button { flex: 1 1 140px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .record-btn.recording { animation: none; }
+  button { transition: none; }
+}

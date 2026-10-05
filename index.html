@@ -1,77 +1,97 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Czech A2 — Dialogue Practice v3</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Practise Czech A2 conversations with spoken questions, guided answers and rule-based feedback.">
+<title>Czech A2 — Dialogue Practice</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="container">
-  <h1>🎧 Czech A2 — Dialogue Practice (v3)</h1>
-
+<main class="container">
+  <h1>🎧 Czech A2 — Dialogue Practice</h1>
+  <p class="intro">Listen to the question, choose “Speak answer”, then choose “End answer” when you finish.</p>
   <div class="top-bar">
-    <span id="dialogueTitle">Nádraží – slevová karta</span>
+    <span id="dialogueTitle" lang="cs"></span>
     <span class="points">⭐ Points: <span class="num" id="pointsValue">10</span></span>
   </div>
-
   <div class="settings">
-    <select id="dialogueSelect"></select>
-    <div class="level-toggle">
-      <button data-level="dumb" id="dumbBtn">Dumb</button>
-      <button data-level="easy" id="easyBtn" class="active">Easy</button>
-      <button data-level="normal" id="normalBtn">Normal</button>
+    <label for="dialogueSelect">Dialogue</label>
+    <select id="dialogueSelect" lang="cs"></select>
+    <div class="level-toggle" role="group" aria-label="Practice mode">
+      <button data-level="dumb" id="dumbBtn" aria-pressed="false">Guided</button>
+      <button data-level="easy" id="easyBtn" class="active" aria-pressed="true">Practice</button>
+      <button data-level="normal" id="normalBtn" aria-pressed="false">Exam</button>
     </div>
   </div>
-  
-    <div class="situation-box" id="situationBox" style="display:none;">
-    <div class="situation-label">Situace</div>
-    <div class="situation-text" id="situationText"></div>
+  <section class="situation-box" id="situationBox" aria-labelledby="situationLabel">
+    <h2 class="situation-label" id="situationLabel">Situation</h2>
+    <div class="situation-text" id="situationText" lang="cs"></div>
     <div class="situation-translation" id="situationTranslation"></div>
-  </div>
-
+  </section>
   <div class="scene">
-    <img class="clerk-photo" id="clerkPhoto"
-         src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jana&backgroundColor=b6e3f4"
-         alt="Clerk">
+    <div class="clerk-photo" aria-hidden="true">🗣️</div>
     <div class="clerk-bubble">
-      <div class="clerk-label" id="clerkLabel">Pokladní (Clerk)</div>
-      <div class="clerk-spoken" id="clerkSpoken">🔊 Click "Play question" to hear the clerk.</div>
-      <div class="clerk-written" id="clerkWritten"></div>
+      <div class="clerk-label" id="clerkLabel" lang="cs"></div>
+      <div class="clerk-spoken" id="clerkSpoken"></div>
+      <div class="clerk-written" id="clerkWritten" lang="cs"></div>
       <div class="clerk-translation" id="clerkTranslation"></div>
     </div>
   </div>
-
-  <div class="student-bubble" id="studentBubble">
-    <div class="student-label">Vy (Student)</div>
-    <div class="student-line" id="studentLine"></div>
+  <div class="settings" role="group" aria-label="Question navigation">
+    <label for="questionSelect">Question</label>
+    <select id="questionSelect" lang="cs"></select>
+    <button id="goQuestionBtn">Go to question</button>
+    <button id="previousQuestionBtn">← Back</button>
+    <button id="forwardQuestionBtn">Next question →</button>
   </div>
-
+  <div class="student-bubble" id="studentBubble">
+    <div class="student-label">Your answer</div>
+    <div class="student-line" id="studentLine" lang="cs"></div>
+  </div>
   <div class="buttons">
     <button class="play-btn" id="playBtn">🔊 Play question</button>
     <button class="hint-btn" id="hintBtn">💡 Show text (−2 ⭐)</button>
     <button class="record-btn" id="recordBtn">🎤 Speak answer</button>
-    <button class="continue-btn" id="continueBtn" style="display:none;">➡️ Continue</button>
-    <button class="next-btn" id="nextBtn" style="display:none;">➡️ Next</button>
+    <button class="continue-btn" id="continueBtn" hidden>➡️ Continue</button>
+    <button class="next-btn" id="nextBtn" hidden>➡️ Next question</button>
+    <button id="restartBtn">Restart dialogue</button>
   </div>
-
-  <div class="status" id="status"></div>
-
-  <div class="result-box" id="resultBox">
-    Your feedback will appear here after you speak.
-  </div>
-</div>
-
+  <div class="status" id="status" role="status" aria-live="polite" aria-atomic="true"></div>
+  <section class="result-box" id="resultBox" aria-label="Answer feedback" aria-live="polite" aria-atomic="true">Your feedback will appear here after you answer.</section>
+  <details>
+    <summary>Help, scoring and privacy</summary>
+    <p>Choose a question and press Go to question to practise it directly, or repeat it. Back returns to the previous question you visited. Next question follows your answer's branch, or the first example route if you have not answered. Alternative questions are also available in the list. Moving freely keeps your points without awarding them twice; this practice is not saved as a completed dialogue. Restart dialogue to begin a full run.</p>
+    <p>Guided shows Czech and English. Practice shows Czech. Exam hides the question text until you request a hint. Exam is a practice mode, not an official exam assessment.</p>
+    <p>Each dialogue starts at 10 points. An accepted answer earns its stated reward once per question. A hint costs 2 points once per question. After three unsuccessful attempts, you move on and lose 1 point once per question. Points stay at zero or above. Switching modes keeps your attempts; scores after switching during a run are saved as “Mixed modes”.</p>
+    <p>Different answers can be correct: you can ask questions, refuse, or choose an alternative. Feedback checks your response in the conversation. It does not assess pronunciation. If an answer is not understood, try saying it another way.</p>
+    <p>Speech recognition works in supported browsers such as Chrome and may need an internet connection. Allow microphone access only when you want to speak. If nothing is heard, check your microphone and site permissions. Czech voice availability depends on your device.</p>
+    <p>Your browser’s speech service may process audio remotely. This app does not store audio or answers. Only completed-run summaries are saved on this device, if browser storage is available. Clearing site data removes them.</p>
+  </details>
+  <noscript>This trainer needs JavaScript to load dialogues and check answers.</noscript>
+</main>
 <script src="content/concepts.js"></script>
+<script src="content/conversation-tools.js"></script>
+<script src="content/expanded-intents.js"></script>
 <script src="content/station-card-1.js"></script>
 <script src="content/station-card-2.js"></script>
 <script src="content/optika-1.js"></script>
 <script src="content/optika-2.js"></script>
 <script src="content/ridicsky-prukaz-1.js"></script>
+<script src="content/batch-1-tools.js"></script>
+<script src="content/ridicsky-prukaz-2.js"></script>
+<script src="content/lekarna-1.js"></script>
+<script src="content/lekarna-2.js"></script>
+<script src="content/lekar-objednani.js"></script>
+<script src="content/lekar-zmena-terminu.js"></script>
+<script src="content/matching-rules.js"></script>
 <script src="engine/text.js"></script>
+<script src="engine/slots.js"></script>
 <script src="engine/matcher.js"></script>
 <script src="engine/validator.js"></script>
 <script src="engine/session.js"></script>
 <script src="engine/speech.js"></script>
+<script src="engine/progress.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

@@ -1,0 +1,9 @@
+{
+  "name": "czech-a2-dialogue-trainer",
+  "private": true,
+  "scripts": {
+    "validate": "node scripts/validate.js",
+    "test": "node --test tests/*.test.js",
+    "serve": "node scripts/serve.js"
+  }
+}

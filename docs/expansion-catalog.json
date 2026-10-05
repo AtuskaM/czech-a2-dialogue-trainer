@@ -1,0 +1,416 @@
+{
+  "sourceFile": "zkouska_A2_uloha_2_dialogy_1-rayoyf.pdf",
+  "sourceTitle": "Úloha 2 – příklady dialogů",
+  "sourceDate": "2023-02-13",
+  "sourcePages": 28,
+  "existingDialogues": 5,
+  "additionalDialogues": [
+    {
+      "sourceDialogue": 6,
+      "title": "Úřad – řidičský průkaz (varianta 2)",
+      "sourcePage": 6,
+      "batch": 1,
+      "status": "implemented",
+      "teacherReview": "pending",
+      "answerFixtures": "implemented"
+    },
+    {
+      "sourceDialogue": 7,
+      "title": "Lékárna (varianta 1)",
+      "sourcePage": 7,
+      "batch": 1,
+      "status": "implemented",
+      "teacherReview": "pending",
+      "answerFixtures": "implemented"
+    },
+    {
+      "sourceDialogue": 8,
+      "title": "Lékárna (varianta 2)",
+      "sourcePage": 7,
+      "batch": 1,
+      "status": "implemented",
+      "teacherReview": "pending",
+      "answerFixtures": "implemented"
+    },
+    {
+      "sourceDialogue": 9,
+      "title": "Lékař – objednání",
+      "sourcePage": 8,
+      "batch": 1,
+      "status": "implemented",
+      "teacherReview": "pending",
+      "answerFixtures": "implemented"
+    },
+    {
+      "sourceDialogue": 10,
+      "title": "Lékař – změna termínu",
+      "sourcePage": 8,
+      "batch": 1,
+      "status": "implemented",
+      "teacherReview": "pending",
+      "answerFixtures": "implemented"
+    },
+    {
+      "sourceDialogue": 11,
+      "title": "Lékař – nachlazení",
+      "sourcePage": 9,
+      "batch": 2,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 12,
+      "title": "Zubař – ošetření",
+      "sourcePage": 9,
+      "batch": 2,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 13,
+      "title": "Banka – otevření účtu",
+      "sourcePage": 10,
+      "batch": 2,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 14,
+      "title": "Banka – výměna peněz",
+      "sourcePage": 10,
+      "batch": 2,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 15,
+      "title": "Banka – zrušení účtu",
+      "sourcePage": 11,
+      "batch": 2,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 16,
+      "title": "Pošta – poslání balíku",
+      "sourcePage": 11,
+      "batch": 3,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 17,
+      "title": "Pošta – poslání dopisu",
+      "sourcePage": 12,
+      "batch": 3,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 18,
+      "title": "Hotel – rezervace",
+      "sourcePage": 12,
+      "batch": 3,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 19,
+      "title": "Cestovní kancelář – zájezd",
+      "sourcePage": 13,
+      "batch": 3,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 20,
+      "title": "Divadlo – lístky",
+      "sourcePage": 13,
+      "batch": 3,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 21,
+      "title": "Kino – lístky",
+      "sourcePage": 14,
+      "batch": 4,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 22,
+      "title": "Knihovna – registrace",
+      "sourcePage": 14,
+      "batch": 4,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 23,
+      "title": "Dopravní podnik – roční jízdenka",
+      "sourcePage": 15,
+      "batch": 4,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 24,
+      "title": "Realitní kancelář – pronájem bytu (varianta 1)",
+      "sourcePage": 15,
+      "batch": 4,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 25,
+      "title": "Realitní kancelář – pronájem bytu (varianta 2)",
+      "sourcePage": 16,
+      "batch": 4,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 26,
+      "title": "Realitní kancelář – nákup domu",
+      "sourcePage": 16,
+      "batch": 5,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 27,
+      "title": "Obchod s obuví – nákup",
+      "sourcePage": 17,
+      "batch": 5,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 28,
+      "title": "Obchod s oděvy – nákup (varianta 1)",
+      "sourcePage": 17,
+      "batch": 5,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 29,
+      "title": "Obchod s oděvy – nákup (varianta 2)",
+      "sourcePage": 18,
+      "batch": 5,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 30,
+      "title": "Obchod s oděvy – výměna",
+      "sourcePage": 18,
+      "batch": 5,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 31,
+      "title": "Půjčovna oděvů",
+      "sourcePage": 19,
+      "batch": 6,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 32,
+      "title": "Čistírna",
+      "sourcePage": 19,
+      "batch": 6,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 33,
+      "title": "Květinářství – nákup",
+      "sourcePage": 20,
+      "batch": 6,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 34,
+      "title": "Mobilní operátor – nákup tarifu",
+      "sourcePage": 20,
+      "batch": 6,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 35,
+      "title": "Hospoda – oběd",
+      "sourcePage": 21,
+      "batch": 6,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 36,
+      "title": "Restaurace – rezervace",
+      "sourcePage": 21,
+      "batch": 7,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 37,
+      "title": "Opravna mobilních telefonů (varianta 1)",
+      "sourcePage": 22,
+      "batch": 7,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 38,
+      "title": "Opravna mobilních telefonů (varianta 2)",
+      "sourcePage": 22,
+      "batch": 7,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 39,
+      "title": "Opravna bot",
+      "sourcePage": 23,
+      "batch": 7,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 40,
+      "title": "Hodinářství – oprava hodinek",
+      "sourcePage": 23,
+      "batch": 7,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 41,
+      "title": "Instalatér – oprava WC",
+      "sourcePage": 24,
+      "batch": 8,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 42,
+      "title": "Firma – hledání ředitele",
+      "sourcePage": 24,
+      "batch": 8,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 43,
+      "title": "Ulice – hledání hotelu",
+      "sourcePage": 25,
+      "batch": 8,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 44,
+      "title": "Škola – omluva syna",
+      "sourcePage": 25,
+      "batch": 8,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 45,
+      "title": "Policie – ukradené auto",
+      "sourcePage": 26,
+      "batch": 8,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 46,
+      "title": "Policie – ztráta peněženky",
+      "sourcePage": 26,
+      "batch": 9,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 47,
+      "title": "OAMP – trvalý pobyt",
+      "sourcePage": 27,
+      "batch": 9,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 48,
+      "title": "OAMP – zkouška z češtiny",
+      "sourcePage": 27,
+      "batch": 9,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 49,
+      "title": "Úřad práce – hledání práce (varianta 1)",
+      "sourcePage": 28,
+      "batch": 9,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    },
+    {
+      "sourceDialogue": 50,
+      "title": "Úřad práce – hledání práce (varianta 2)",
+      "sourcePage": 28,
+      "batch": 9,
+      "status": "planned",
+      "teacherReview": "pending",
+      "answerFixtures": "pending"
+    }
+  ],
+  "implementedDialogues": 10,
+  "nextBatch": 2
+}

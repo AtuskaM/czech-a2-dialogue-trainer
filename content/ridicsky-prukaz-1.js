@@ -82,5 +82,104 @@
   n('express_done','Děkuji. Tady je potvrzení. Přijďte si za pět dnů pro nový průkaz. Na shledanou.','Thank you. Here is the receipt. Come for your new licence in five days. Goodbye.',[r('finish_express',null,bye)],'Na shledanou.','Goodbye.');
   n('later','Dobře, až přijdete znovu, vezměte si pas nebo občanku. Na shledanou.','All right, bring your passport or identity card when you come back. Goodbye.',[r('finish_later',null,bye)],'Na shledanou.','Goodbye.');
 
-  globalThis.DialogueCatalog.push({schemaVersion:1,id:'ridicsky-prukaz-1',title:'5. Úřad – řidičský průkaz (varianta 1)',clerkLabel:'Úředník (Clerk)',situation:'Jste na úřadě. Ztratil/a jste řidičský průkaz a potřebujete nový průkaz.',situationTranslation:'You are at an administrative office. You have lost your driving licence and need a new licence.',source:{file:'zkouska_A2_uloha_2_dialogy_1-rayoyf.pdf',page:6,dialogue:5},start:'start',concepts,nodes});
+
+  const tools=globalThis.ConversationTools(nodes,concepts);
+  Object.assign(concepts,{
+    repeatRequest:['říct ještě jednou','řekněte ještě jednou','mluvte pomaleji','nerozuměl','nerozuměla','opakujte otázku'],
+    understood:['rozumím','dobře','jasně','aha','chápu','děkuji za vysvětlení'],
+    notUnderstood:['nerozumím','nerozuměl','nerozuměla','nechápu','nevím'],
+    licenceObject:['řidičák','řidičský průkaz','řidičského průkazu','řidičské oprávnění'],
+    lostWords:['ztratil','ztratila','ztracený','ukradli','ukradený','nemám řidičák','nový','náhradní','duplikát'],
+    identityYes:['pas','občanku','občanka','občanský průkaz','doklad','tady','zde','ano','mám'],
+    identityNo:['nemám','zapomněl','zapomněla','bez dokladu','bez pasu','žádný doklad'],
+    identityQuestion:['co je','co znamená','jaký doklad','co potřebujete','nerozumím','vysvětlit'],
+    formObject:['žádost','žádosti','formulář','formuláře'],
+    formDone:['hotovo','hotové','vyplnil','vyplnila','vyplněná','vyplněný','podepsaná','podepsal','podepsala','tady je'],
+    formNotDone:['nevyplnil','nevyplnila','nepodepsal','nepodepsala','není hotová','nemám hotovo'],
+    questionWords:['kde','kam','jak','co','které','který','kterou'],
+    signatureWords:['podepsat','podpis','podepisuje','podepisovat'],
+    photoObject:['fotku','fotka','fotografii','fotografie','fotografovat','vyfotit','fotit'],
+    photoQuestion:['potřebujete','nepotřebujete','potřebuji','přinést','musím','nemám fotku'],
+    photoBad:['ne','nelíbí','zavřené oči','špatná','není dobrá','znovu','znova','ještě jednou'],
+    photoGood:['ano','v pořádku','dobrá','dobře','líbí','lepší','vyhovuje'],
+    feesWords:['kolik','cena','cenu','poplatek','poplatky','zaplatit','stojí'],
+    timeWords:['kdy','jak dlouho','termín','termíny','vyzvednout','hotový','čekat'],
+    expressWords:['expresní','expresně','rychlejší','rychle','spěchám','pět dnů','pět dní'],
+    standardWords:['normální','normálně','standardní','standardně','nespěchám','tři týdny'],
+    expressQuery:['co znamená','co je','jaký je rozdíl','vysvětlíte','vysvětlit','nerozumím'],
+    collectionWords:['kde','kam','sem','místo','vyzvednutí'],
+    payWords:['tady','zde','platím','zaplatím','peníze','kartou','hotově'],
+    cannotPay:['nemám peníze','nemůžu zaplatit','nemohu zaplatit','zaplatit později','zaplatím později'],
+    paymentQuestion:['můžu platit','mohu platit','můžu zaplatit','mohu zaplatit','lze platit','berete karty','zaplatit kartou','platit kartou','zaplatit hotově','platit hotově'],
+    returnWords:['přinesu','dojdu','vrátím se','donést','přinést'],
+    laterWords:['jindy','zítra','později','jiný den','nemám čas','nemůžu'],
+    refusal:['nechci','nevezmu','nezaplatím','nepotřebuji','nepotřebuju'],
+    goodbyeWords:['na shledanou','nashledanou','hezký den','mějte se']
+  });
+  const set=(id,variants,patterns,forbidden=[],positive=[])=>tools.configure(id,variants,patterns,forbidden,positive);
+  set('replace_lost_licence',['Ukradli mi řidičský průkaz.','Potřebuji náhradní řidičák.'],[['licenceObject','lostWords']],['refusal']);
+  set('show_identity',['Ano, mám ho tady.','Přinesla jsem pas.'],[['identityYes']],['identityNo','identityQuestion']);
+  set('no_identity',[],[['identityNo']]);
+  set('explain_identity',[],[['identityQuestion']]);
+  set('return_with_document',[],[['returnWords']],['laterWords']);
+  set('leave_for_today',[],[['laterWords']]);
+  set('ask_signature',[],[['questionWords','signatureWords']]);
+  set('explain_application',[],[['questionWords','formObject']],['formDone','signatureWords','photoObject']);
+  set('completed_form',[],[['formDone']],['formNotDone','photoObject','signatureWords']);
+  // Signing is valid in a completed statement; a question about signing is a clarification.
+  for(const n of Object.values(nodes))for(const r of n.responses)if(r.id==='completed_form')r.match.forbidden=['formNotDone','photoObject'];
+  set('completed_form_photo_question',[],[['photoObject','photoQuestion']]);
+  set('retake_photo',[],[['photoBad']]);
+  set('accept_photo',[],[['photoGood'],['timeWords']],['photoBad']);
+  set('accept_new_photo',[],[['photoGood'],['timeWords']],['photoBad']);
+  set('another_photo',[],[['photoBad']]);
+  set('ask_fees',[],[['feesWords']],['expressQuery']);
+  set('repeat_times',[],[['timeWords']],['standardWords','expressWords']);
+  set('express_service',[],[['expressWords']],['standardWords','expressQuery','feesWords','refusal'],['express_service','expressWords','standardWords']);
+  set('standard_service',[],[['standardWords']],['expressWords','expressQuery','feesWords','refusal'],['standard_service','standardWords','expressWords']);
+  set('explain_express',[],[['expressQuery']]);
+  set('change_to_express',[],[['expressWords']],['standardWords','feesWords','refusal'],['change_to_express','expressWords','standardWords']);
+  set('change_to_standard',[],[['standardWords']],['expressWords','feesWords','refusal'],['change_to_standard','standardWords','expressWords']);
+  for(const id of ['pay_standard','pay_express'])set(id,[],[['payWords']],['paymentQuestion','collectionWords','refusal','cannotPay']);
+  for(const id of ['ask_standard_collection','ask_express_collection'])set(id,[],[['collectionWords']],['paymentQuestion']);
+  for(const id of ['finish_standard','finish_express','finish_later'])set(id,[],[['goodbyeWords']]);
+
+  nodes.start.responses.push(tools.response('licence_reason','licence_reason_question',['Potřebuji nový průkaz.','Potřebuji nový doklad.'],{forbidden:['licenceObject']},0));
+  tools.node('licence_reason_question','Myslíte řidičský průkaz? A co se stalo s tím starým?','Do you mean your driving licence? What happened to the old one?',[
+    tools.response('explain_lost','identity',['Ztratil jsem ho.','Ztratila jsem ho.','Ukradli mi ho.','Ano, nový řidičák.'],{patterns:[['lostWords']],forbidden:['refusal']})
+  ],'start');
+  tools.clarify('identity','identity_explained','Potřebuji doklad s vaším jménem a fotografií, například pas nebo občanku. Máte ho u sebe?','I need a document with your name and photo, such as a passport or identity card. Do you have it with you?');
+  tools.clarify('form','signature_explained','Podepište se dole na druhé straně. Potom mi vraťte vyplněnou žádost.','Sign at the bottom of the second page, then return the completed application to me.');
+  tools.clarify('form','application_explained','Žádost je tento formulář. Vyplňte údaje a podepište se na druhé straně. Potom mi ji vraťte.','The application is this form. Fill in the details and sign the second page, then return it to me.');
+  const formHelp=tools.response('need_form_help','form_help',['Nevím, jak to vyplnit.','Můžete mi pomoct s formulářem?','Nemám pero.','Co mám napsat?'],{patterns:[['notUnderstood','formObject']]},0);
+  nodes.form.responses.push(formHelp);
+  tools.clarify('form','form_help','Napište své jméno a adresu do označených polí. Pero je tady. Potom se podepište a vraťte mi formulář.','Write your name and address in the marked fields. The pen is here. Then sign and return the form.');
+  const photoPurpose=tools.response('photo_explanation','photo_instructions',['Proč mě fotíte?','Kam se mám dívat?','Mám si sundat brýle?','Jak mě vyfotíte?'],{patterns:[['questionWords','photoObject']]},0);
+  for(const id of ['photo','photo_information','photo_again'])nodes[id].responses.push(photoPurpose);
+  tools.clarify('photo','photo_instructions','Fotografie bude na novém průkazu. Podívejte se do kamery. Teď vám ukážu výsledek. Je v pořádku, nebo chcete další fotku?','The photo will be on your new licence. Look at the camera. I will show you the result. Is it OK, or would you like another photo?');
+  const feesAgain=tools.response('fees_clarification','fees_explained',['Kolik to stojí?','Můžete zopakovat cenu?','Kolik stojí normální vydání?','To je drahé, nemáte levnější?'],{patterns:[['feesWords']]},0);
+  nodes.fees.responses.push(feesAgain);
+  tools.node('fees_explained','V tomto příkladu stojí normální vydání 200 korun a trvá tři týdny. Expresní je za 700 korun a pět dnů. Které chcete?','In this practice example, standard service costs 200 crowns and takes three weeks. Express costs 700 crowns and takes five days. Which would you like?',nodes.fees.responses.filter(r=>r.id!=='fees_clarification'),'fees');
+  tools.clarify('times','express_explained','Expresní znamená rychlejší vydání za pět dnů. Normální trvá tři týdny. Chcete rychlejší vydání, normální vydání, nebo vědět cenu?','Express means faster service in five days. Standard takes three weeks. Would you like express, standard, or to know the price?');
+  for(const mode of ['standard','express']) {
+    const payment=tools.response('ask_'+mode+'_payment',mode+'_payment',['Můžu platit kartou?','Mohu zaplatit hotově?','Berete karty?'],{patterns:[['paymentQuestion']]},0);
+    nodes[mode].responses.push(payment);nodes[mode+'_collection'].responses.push(payment);
+    tools.node(mode+'_payment','V tomto příkladu můžete platit kartou nebo hotově. Jak chcete zaplatit?','In this practice example, you can pay by card or cash. How would you like to pay?',[
+      nodes[mode].responses.find(r=>r.id==='pay_'+mode),
+      nodes[mode].responses.find(r=>r.id==='ask_'+mode+'_collection')
+    ],mode);
+    nodes[mode].responses.push(feesAgain);
+    const paymentHelp=tools.response('cannot_pay_'+mode,mode+'_payment_help',['Nemám teď peníze.','Můžu zaplatit později?'],{patterns:[['cannotPay']]},0);
+    nodes[mode].responses.push(paymentHelp);nodes[mode+'_payment'].responses.push(paymentHelp);
+    tools.node(mode+'_payment_help','Můžete přijít zaplatit později. Než žádost dokončíme, potřebujeme poplatek. Chcete přijít jindy, nebo pokračovat teď?','You can return to pay later. In this practice situation, we need the fee before completing the application. Would you like to return another time or continue now?',[
+      tools.response('return_to_pay_'+mode,'later',['Přijdu zítra.','Vrátím se později.'],{patterns:[['laterWords']]}),
+      tools.response('pay_now_'+mode,mode,['Dobře, zaplatím teď.','Tak budu platit kartou.'],{patterns:[['payWords']],forbidden:['cannotPay']},0)
+    ],mode);
+  }
+  globalThis.ExpandedIntents.licence(nodes,concepts,tools);
+  tools.rejoin('start_repeat','start');
+  for(const [id,source]of [['identity_explained','identity'],['signature_explained','form'],['application_explained','form'],['form_help','form'],['photo_instructions','photo'],['photo_explained','photo'],['express_explained','times'],['times_repeat','times'],['fees_explained','fees']])tools.rejoin(id,source);
+  tools.repeatSupport();
+
+  globalThis.DialogueCatalog.push({schemaVersion:1,matchingRevision:2,id:'ridicsky-prukaz-1',title:'5. Úřad – řidičský průkaz (varianta 1)',clerkLabel:'Úředník (Clerk)',situation:'Jste na úřadě. Ztratil/a jste řidičský průkaz a potřebujete nový průkaz.',situationTranslation:'You are at an administrative office. You have lost your driving licence and need a new licence.',source:{file:'zkouska_A2_uloha_2_dialogy_1-rayoyf.pdf',page:6,dialogue:5},start:'start',concepts,nodes});
 })();

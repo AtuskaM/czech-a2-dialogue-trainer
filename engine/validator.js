@@ -37,15 +37,25 @@
         responseIds.add(r.id);
         if(!text(r.intent)) add('missing-intent',rp+'.intent','Name the student intention.');
         if(!['correct','alternative','choice'].includes(r.kind)) add('invalid-kind',rp+'.kind','Use correct, alternative, or choice.');
-        if(!Number.isFinite(r.reward)) add('invalid-reward',rp+'.reward','Provide a finite points reward.');
+        if(!Number.isFinite(r.reward)||r.reward<0) add('invalid-reward',rp+'.reward','Provide a finite nonnegative points reward.');
         if(!Array.isArray(r.examples)||!r.examples.length||r.examples.some(v=>!text(v))) add('missing-responses',rp+'.examples','Provide at least one model answer for feedback.');
         reference(r.next,rp+'.next',id);
         if(!object(r.match)) {add('invalid-match',rp+'.match','Provide intent matching rules.');continue;}
-        for(const field of Object.keys(r.match)) if(!['required','anyOf','optional','forbidden','acceptAny'].includes(field)) add('invalid-match',rp+'.match.'+field,'Unknown matching field.');
+        for(const field of Object.keys(r.match)) if(!['required','anyOf','optional','forbidden','acceptAny','allowedAmounts','patterns','positiveConcepts','priority','slots'].includes(field)) add('invalid-match',rp+'.match.'+field,'Unknown matching field.');
+        if(r.match.slots!==undefined) {
+          const s=r.match.slots;
+          if(!object(s)||!['date','time'].includes(s.kind)||!['match','different','compatible'].includes(s.mode)||!Array.isArray(s.allowed)||!s.allowed.length||s.allowed.some(v=>typeof v!=='string'))add('invalid-slot',rp+'.match.slots','Provide a date/time kind, matching mode and allowed values.');
+        }
+        if(r.match.priority!==undefined&&(!Number.isInteger(r.match.priority)||r.match.priority<0))add('invalid-priority',rp+'.match.priority','Priority must be a nonnegative integer.');
+        if(r.match.patterns!==undefined) {
+          if(!Array.isArray(r.match.patterns)||!r.match.patterns.length)add('invalid-pattern',rp+'.match.patterns','Provide nonempty concept groups.');
+          else for(const group of r.match.patterns)if(!Array.isArray(group)||!group.length||group.some(name=>!Object.hasOwn(concepts,name)))add('invalid-pattern',rp+'.match.patterns','Each pattern needs known concepts.');
+        }
+        if(r.match.allowedAmounts!==undefined&&(!Array.isArray(r.match.allowedAmounts)||!r.match.allowedAmounts.length||r.match.allowedAmounts.some(n=>!Number.isFinite(n)||n<0)))add('invalid-amount',rp+'.match.allowedAmounts','Provide nonnegative numeric amounts.');
         if(r.match.acceptAny!==undefined && r.match.acceptAny!==true) add('invalid-match',rp+'.match.acceptAny','Omit acceptAny or set it to true.');
         if(r.match.acceptAny && n.mode!=='acknowledgement') add('unsafe-accept-any',rp+'.match','acceptAny is only for acknowledgement nodes.');
         if(!r.match.acceptAny && !['required','anyOf'].some(f=>Array.isArray(r.match[f])&&r.match[f].length)) add('missing-responses',rp+'.match','Require at least one positive concept.');
-        for(const field of ['required','anyOf','optional','forbidden']) {
+        for(const field of ['required','anyOf','optional','forbidden','positiveConcepts']) {
           if(r.match[field]===undefined) continue;
           if(!Array.isArray(r.match[field])) {add('invalid-match',rp+'.match.'+field,'Expected concept ID array.');continue;}
           for(const name of r.match[field]) if(!text(name)||!Object.hasOwn(concepts,name)) add('unknown-concept',rp+'.match.'+field,'Unknown concept: '+name);
