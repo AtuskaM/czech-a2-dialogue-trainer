@@ -24,6 +24,26 @@ function setup() {
   return {context,element,answer:text=>callbacks.result(text),select:index=>element('dialogueSelect').change({target:{value:String(index)}})};
 }
 
+test('speaker set covers all 50 source dialogues and current selections show their portrait',()=>{
+  const {context,element,select}=setup();
+  const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../assets/speakers/manifest.json'),'utf8'));
+  const speakers=JSON.parse(JSON.stringify(context.DialogueSpeakers));
+  assert.equal(speakers.length,33);
+  assert.deepEqual(speakers.flatMap(s=>s.dialogues).sort((a,b)=>a-b),Array.from({length:50},(_,i)=>i+1));
+  for(const speaker of speakers) {
+    assert.ok(fs.existsSync(path.join(__dirname,'..',speaker.src)),speaker.src);
+    const saved=manifest.speakers.find(s=>s.id===speaker.id);
+    assert.deepEqual(saved.dialogues,speaker.dialogues);
+    assert.equal(saved.src,speaker.src);
+  }
+  for(let i=0;i<context.DialogueCatalog.length;i++) {
+    select(i);
+    const speaker=speakers.find(s=>s.dialogues.includes(context.DialogueCatalog[i].source?.dialogue||i+1));
+    assert.equal(element('speakerPortrait').src,speaker.src);
+    assert.equal(element('speakerPortrait').alt,speaker.label);
+  }
+});
+
 test('question navigation jumps, repeats, follows answers and returns without extra credit',()=>{
   const {element,answer,select}=setup();select(9);
   element('questionSelect').value='availability';element('goQuestionBtn').click();

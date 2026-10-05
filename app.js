@@ -44,6 +44,10 @@
     speech.cancel();points();
     $('dialogueTitle').textContent=session.dialogue.title;
     $('clerkLabel').textContent=session.dialogue.clerkLabel;
+    const sourceNumber=session.dialogue.source?.dialogue||catalog.indexOf(session.dialogue)+1;
+    const speaker=root.DialogueSpeakers.find(s=>s.dialogues.includes(sourceNumber));
+    $('speakerPortrait').src=speaker.src;
+    $('speakerPortrait').alt=speaker.label;
     $('situationText').textContent=session.dialogue.situation;
     $('situationTranslation').textContent=session.dialogue.situationTranslation;
     $('situationTranslation').classList.toggle('revealed',session.level==='dumb');

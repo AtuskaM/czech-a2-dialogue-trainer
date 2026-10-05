@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="studio-stage">
+<img class="studio-mascot" src="assets/rdm-mascot.png" alt="" aria-hidden="true">
+<header class="studio-brand"><img src="assets/rdm-logo.png" alt="RDM Language Studio"></header>
 <main class="container">
   <h1>🎧 Czech A2 — Dialogue Practice</h1>
   <p class="intro">Listen to the question, choose “Speak answer”, then choose “End answer” when you finish.</p>
@@ -30,7 +33,7 @@
     <div class="situation-translation" id="situationTranslation"></div>
   </section>
   <div class="scene">
-    <div class="clerk-photo" aria-hidden="true">🗣️</div>
+    <img class="clerk-photo" id="speakerPortrait" src="assets/speakers/railway.png" alt="Pokladní na nádraží">
     <div class="clerk-bubble">
       <div class="clerk-label" id="clerkLabel" lang="cs"></div>
       <div class="clerk-spoken" id="clerkSpoken"></div>
@@ -70,7 +73,9 @@
   </details>
   <noscript>This trainer needs JavaScript to load dialogues and check answers.</noscript>
 </main>
+</div>
 <script src="content/concepts.js"></script>
+<script src="content/speakers.js"></script>
 <script src="content/conversation-tools.js"></script>
 <script src="content/expanded-intents.js"></script>
 <script src="content/station-card-1.js"></script>

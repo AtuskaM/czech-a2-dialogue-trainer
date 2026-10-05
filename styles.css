@@ -123,3 +123,68 @@ details { margin-top: 12px; }
   .record-btn.recording { animation: none; }
   button { transition: none; }
 }
+
+/* RDM studio review theme. Mascot geometry depends on the viewport, never panel height. */
+:root { --mascot-space: clamp(190px, 26vw, 350px); --mascot-width: min(60svh, 36vw); }
+body { display: block; padding: 28px 24px 56px; background: #030609 url('assets/stars.jpg') center top / 983px auto repeat fixed; color: #24394a; font-family: 'Segoe UI', Arial, sans-serif; }
+.studio-stage { width: 100%; max-width: 1180px; margin: 0 auto; }
+.studio-brand { margin-left: var(--mascot-space); display: flex; justify-content: center; padding: 0 0 24px; }
+.studio-brand img { display: block; width: 300px; max-width: 70%; height: auto; filter: saturate(.58) brightness(.88); }
+.studio-mascot { position: fixed; z-index: 3; pointer-events: none; user-select: none; width: var(--mascot-width); height: 90svh; top: 5svh; left: calc(max(24px, (100vw - 1180px) / 2) + var(--mascot-space) - var(--mascot-width) + 34px); object-fit: contain; object-position: right center; filter: drop-shadow(0 8px 18px #0008); }
+.container { position: relative; width: calc(100% - var(--mascot-space)); max-width: none; margin-left: var(--mascot-space); padding: 32px 36px 28px 44px; border: 1px solid #b79552; border-top: 3px solid #c6a466; border-radius: 18px; background: linear-gradient(135deg, #fffdf6, #f4f0e5); box-shadow: 0 0 0 5px #b7955215, 0 24px 80px #000b; }
+h1 { font-family: Georgia, 'Times New Roman', serif; font-size: 27px; font-weight: normal; letter-spacing: -.5px; color: #17374a; margin-bottom: 10px; }
+.intro { font-size: 14px; margin: 0 0 24px; color: #52606a; }
+.top-bar { background: #112f40; border: 1px solid #294b59; padding: 14px 16px; font-size: 14px; }
+.points { color: #ead6a5; font-size: 16px; white-space: nowrap; }
+.points .num { color: #f4dfaa; }
+.settings { gap: 8px; }
+.settings label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #6b604a; }
+.settings select { background: #fffdf8; border-color: #cfc5b0; color: #263c49; }
+.level-toggle { background: #e8e3d7; padding: 3px; }
+.level-toggle button.active, .level-toggle button[data-level].active { background: #17475a; color: #fff; }
+.situation-box { background: #eee7d4; border-color: #ad8b48; padding: 14px 16px; }
+.situation-label { color: #705825; letter-spacing: 1.5px; }
+.situation-text { color: #3e443e; }
+.scene { gap: 12px; }
+.clerk-photo { width: 48px; height: 48px; font-size: 25px; border: 1px solid #adc2c4; background: #dce8e5; }
+.clerk-bubble { background: #e6efed; border-color: #37788a; }
+.clerk-label { letter-spacing: 1px; }
+.clerk-spoken { font-size: 14px; }
+.clerk-written { color: #164a55; line-height: 1.55; border-color: #b6c8c5; }
+button { background: #e9e4d8; color: #34444b; border: 1px solid transparent; }
+button:hover:not(:disabled) { filter: brightness(.95); }
+.play-btn, .play-btn:hover:not(:disabled) { background: #205c71; color: #fff; }
+.record-btn, .record-btn:hover:not(:disabled) { background: #965031; color: #fff; }
+.hint-btn, .hint-btn:hover:not(:disabled) { background: #6a6251; color: #fff; }
+.continue-btn, .next-btn { background: #204d48; color: #fff; }
+#goQuestionBtn { background: #b99a5b; color: #172e3a; }
+[aria-label='Question navigation'] { padding: 15px 0; margin-bottom: 12px; border-top: 1px solid #d8cfbd; border-bottom: 1px solid #d8cfbd; }
+[aria-label='Question navigation'] button { padding: 10px 13px; font-size: 13px; }
+.result-box { background: #fffdf8; border: 1px solid #d9ceba; }
+summary { color: #645536; font-size: 13px; }
+button:focus-visible, select:focus-visible, summary:focus-visible { outline-color: #276e87; }
+@media (max-width: 760px) {
+  :root { --mascot-space: 100px; --mascot-width: 150px; }
+  body { padding: 20px 12px 36px; }
+  .studio-mascot { left: -16px; height: 72svh; top: 18svh; }
+  .container { padding: 24px 20px; }
+  .studio-brand img { width: 250px; max-width: 85%; }
+  h1 { font-size: 23px; }
+  .clerk-photo { display: none; }
+}
+@media (max-width: 480px) {
+  :root { --mascot-space: 24px; }
+  body { padding: 16px 10px 28px; }
+  .studio-brand { height: 100px; padding-bottom: 18px; margin-left: 92px; }
+  .studio-brand img { width: 230px; max-width: 100%; object-fit: contain; }
+  .studio-mascot { position: absolute; top: 5px; left: 0; width: 86px; height: 130px; object-position: top; }
+  .container { padding: 24px 16px; border-radius: 14px; }
+  h1 { font-size: 22px; }
+  .top-bar { align-items: flex-start; }
+}
+
+/* Speaker identities remain visible in every practice mode and on phones. */
+.scene { align-items: center; }
+.clerk-photo { display: block; width: 154px; height: 154px; flex: 0 0 154px; object-fit: contain; border: 0; border-radius: 0; background: transparent; }
+@media (max-width: 760px) { .clerk-photo { display: block; width: 110px; height: 110px; flex-basis: 110px; } }
+@media (max-width: 480px) { .scene { flex-direction: column; align-items: stretch; } .clerk-photo { align-self: center; width: 148px; height: 148px; flex: none; } }

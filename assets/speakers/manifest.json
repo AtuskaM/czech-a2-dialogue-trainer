@@ -1,0 +1,320 @@
+{
+  "reviewStatus": "local-review-not-for-publication",
+  "style": "Approved RDM railway clerk: deep turquoise, vermilion and antique gold; detailed illustrated human portraits.",
+  "speakers": [
+    {
+      "id": "railway",
+      "label": "Pokladní na nádraží",
+      "dialogues": [
+        1,
+        2
+      ],
+      "description": "approved",
+      "src": "assets/speakers/railway.png"
+    },
+    {
+      "id": "optician",
+      "label": "Optik",
+      "dialogues": [
+        3,
+        4
+      ],
+      "description": "man about 50, silver hair, round spectacles, turquoise waistcoat, orange tie, holding eyeglass frames",
+      "src": "assets/speakers/optician.png"
+    },
+    {
+      "id": "licence",
+      "label": "Úřednice – řidičský průkaz",
+      "dialogues": [
+        5,
+        6
+      ],
+      "description": "woman about 50, short dark bob, red blazer, turquoise blouse, holding a blank driving licence card with tiny car pictogram",
+      "src": "assets/speakers/licence.png"
+    },
+    {
+      "id": "pharmacist",
+      "label": "Lékárník",
+      "dialogues": [
+        7,
+        8
+      ],
+      "description": "man about 35, dark curly hair, white pharmacist coat over teal shirt, showing small unlabelled amber medicine bottle",
+      "src": "assets/speakers/pharmacist.png"
+    },
+    {
+      "id": "nurse",
+      "label": "Zdravotní sestra",
+      "dialogues": [
+        9,
+        10
+      ],
+      "description": "woman about 35, blonde hair in bun, turquoise clinical scrubs with small gold pin, holding appointment calendar without letters",
+      "src": "assets/speakers/nurse.png"
+    },
+    {
+      "id": "doctor",
+      "label": "Lékař",
+      "dialogues": [
+        11
+      ],
+      "description": "man about 55, salt-and-pepper beard, white coat over deep teal shirt, stethoscope and small red accent",
+      "src": "assets/speakers/doctor.png"
+    },
+    {
+      "id": "dentist",
+      "label": "Zubařka",
+      "dialogues": [
+        12
+      ],
+      "description": "woman about 40, dark ponytail, teal dental tunic, holding dental mirror beside small tooth model, no face mask",
+      "src": "assets/speakers/dentist.png"
+    },
+    {
+      "id": "bank",
+      "label": "Bankovní poradce",
+      "dialogues": [
+        13,
+        14,
+        15
+      ],
+      "description": "man about 40, neat brown hair, clean shaven, teal suit and vermilion tie, holding ivory bank card, gold coin stack",
+      "src": "assets/speakers/bank.png"
+    },
+    {
+      "id": "post",
+      "label": "Poštovní úřednice",
+      "dialogues": [
+        16,
+        17
+      ],
+      "description": "woman about 45, auburn shoulder-length hair, teal uniform and red scarf, hands on small parcel and envelope",
+      "src": "assets/speakers/post.png"
+    },
+    {
+      "id": "hotel",
+      "label": "Hotelový recepční",
+      "dialogues": [
+        18
+      ],
+      "description": "man about 30, black hair and small moustache, burgundy waistcoat with teal shirt, ornate brass room key and service bell",
+      "src": "assets/speakers/hotel.png"
+    },
+    {
+      "id": "travel",
+      "label": "Pracovnice cestovní kanceláře",
+      "dialogues": [
+        19
+      ],
+      "description": "woman about 30, dark wavy hair, orange jacket and teal blouse, holding folded map with no text, tiny globe",
+      "src": "assets/speakers/travel.png"
+    },
+    {
+      "id": "theatre",
+      "label": "Pokladní v divadle",
+      "dialogues": [
+        20
+      ],
+      "description": "woman about 60, elegant silver bob, burgundy jacket, holding gold theatre tickets, small theatrical mask emblem",
+      "src": "assets/speakers/theatre.png"
+    },
+    {
+      "id": "cinema",
+      "label": "Pokladní v kině",
+      "dialogues": [
+        21
+      ],
+      "description": "young adult man about 25, curly chestnut hair, teal shirt orange waistcoat, holding cinema ticket with filmstrip pictogram and tiny film reel",
+      "src": "assets/speakers/cinema.png"
+    },
+    {
+      "id": "library",
+      "label": "Knihovnice",
+      "dialogues": [
+        22
+      ],
+      "description": "woman about 55, brown hair streaked with grey in loose bun, oval glasses, teal cardigan red scarf, stack of ornate books",
+      "src": "assets/speakers/library.png"
+    },
+    {
+      "id": "transport",
+      "label": "Pracovník dopravního podniku",
+      "dialogues": [
+        23
+      ],
+      "description": "man about 45, shaved head, teal uniform red tie, holding transit pass with tram pictogram",
+      "src": "assets/speakers/transport.png"
+    },
+    {
+      "id": "estate",
+      "label": "Realitní makléřka",
+      "dialogues": [
+        24,
+        25,
+        26
+      ],
+      "description": "woman about 40, sleek black shoulder-length hair, teal tailored suit orange blouse, presenting brass house keys and small house model",
+      "src": "assets/speakers/estate.png"
+    },
+    {
+      "id": "shoes",
+      "label": "Prodavač obuvi",
+      "dialogues": [
+        27
+      ],
+      "description": "man about 35, auburn hair short beard, vermilion shirt teal waistcoat, holding elegant brown shoe above shoebox",
+      "src": "assets/speakers/shoes.png"
+    },
+    {
+      "id": "clothes",
+      "label": "Prodavačka oděvů",
+      "dialogues": [
+        28,
+        29,
+        30
+      ],
+      "description": "woman about 30, dark skin and short natural curls, teal blouse warm red waistcoat, presenting orange garment on wooden hanger",
+      "src": "assets/speakers/clothes.png"
+    },
+    {
+      "id": "rental",
+      "label": "Pracovnice půjčovny oděvů",
+      "dialogues": [
+        31
+      ],
+      "description": "woman about 55, silver swept-back hair, burgundy dress teal shawl, displaying formal teal suit jacket on hanger and gold measuring tape",
+      "src": "assets/speakers/rental.png"
+    },
+    {
+      "id": "cleaning",
+      "label": "Pracovník čistírny",
+      "dialogues": [
+        32
+      ],
+      "description": "man about 50, short brown hair, spectacles, teal work apron over orange shirt, holding freshly pressed ivory shirt on hanger",
+      "src": "assets/speakers/cleaning.png"
+    },
+    {
+      "id": "florist",
+      "label": "Květinářka",
+      "dialogues": [
+        33
+      ],
+      "description": "woman about 40, copper curly hair, teal apron, holding rich red-orange flower bouquet with teal foliage gold ribbon",
+      "src": "assets/speakers/florist.png"
+    },
+    {
+      "id": "mobile",
+      "label": "Prodejce mobilních tarifů",
+      "dialogues": [
+        34
+      ],
+      "description": "young adult man about 28, dark skin short black hair clean shaven, teal polo orange trim, presenting smartphone and tiny SIM card",
+      "src": "assets/speakers/mobile.png"
+    },
+    {
+      "id": "waiter",
+      "label": "Číšník",
+      "dialogues": [
+        35,
+        36
+      ],
+      "description": "man about 45, brown slicked-back hair small moustache, ivory shirt teal waistcoat red bow tie, holding small tray with soup bowl and menu without lettering",
+      "src": "assets/speakers/waiter.png"
+    },
+    {
+      "id": "phone-repair",
+      "label": "Opravář telefonů",
+      "dialogues": [
+        37,
+        38
+      ],
+      "description": "woman about 35, short black pixie hair, turquoise work jacket red tee, holding smartphone with exposed back and precision screwdriver",
+      "src": "assets/speakers/phone-repair.png"
+    },
+    {
+      "id": "cobbler",
+      "label": "Švec",
+      "dialogues": [
+        39
+      ],
+      "description": "man about 60, grey beard, red shirt deep teal leather apron, holding boot and small cobbler hammer",
+      "src": "assets/speakers/cobbler.png"
+    },
+    {
+      "id": "watchmaker",
+      "label": "Hodinář",
+      "dialogues": [
+        40
+      ],
+      "description": "man about 65, white hair and moustache, round glasses with small loupe, teal waistcoat orange shirt, holding wristwatch and precision tweezers",
+      "src": "assets/speakers/watchmaker.png"
+    },
+    {
+      "id": "plumber",
+      "label": "Instalatér",
+      "dialogues": [
+        41
+      ],
+      "description": "woman about 40, brown hair tied back, teal work overalls orange shirt, holding pipe wrench beside brass pipe elbow",
+      "src": "assets/speakers/plumber.png"
+    },
+    {
+      "id": "reception",
+      "label": "Firemní recepční",
+      "dialogues": [
+        42
+      ],
+      "description": "woman about 30, straight brown bob, orange blazer teal blouse, holding office telephone handset near small appointment book",
+      "src": "assets/speakers/reception.png"
+    },
+    {
+      "id": "passerby",
+      "label": "Kolemjdoucí",
+      "dialogues": [
+        43
+      ],
+      "description": "man about 50, wavy grey hair short beard, casual teal coat red scarf, friendly pointing gesture giving directions and folded city map",
+      "src": "assets/speakers/passerby.png"
+    },
+    {
+      "id": "teacher",
+      "label": "Učitelka",
+      "dialogues": [
+        44
+      ],
+      "description": "woman about 45, dark brown hair tied back, teal cardigan orange blouse, holding school register with plain cover and pencil",
+      "src": "assets/speakers/teacher.png"
+    },
+    {
+      "id": "police",
+      "label": "Policista",
+      "dialogues": [
+        45,
+        46
+      ],
+      "description": "man about 40, short dark hair clean shaven, deep navy-teal police uniform with gold generic shield badge red piping, holding report clipboard, no weapon",
+      "src": "assets/speakers/police.png"
+    },
+    {
+      "id": "immigration",
+      "label": "Úřednice OAMP",
+      "dialogues": [
+        47,
+        48
+      ],
+      "description": "woman about 50, dark hair in neat bun, thin rectangular glasses, teal blazer orange scarf, holding closed burgundy passport without text beside document folder",
+      "src": "assets/speakers/immigration.png"
+    },
+    {
+      "id": "employment",
+      "label": "Poradce úřadu práce",
+      "dialogues": [
+        49,
+        50
+      ],
+      "description": "man about 55, receding brown hair neatly trimmed beard, teal jacket gold sweater red tie accent, holding blank CV folder and pencil",
+      "src": "assets/speakers/employment.png"
+    }
+  ]
+}
